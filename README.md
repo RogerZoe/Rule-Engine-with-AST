@@ -151,10 +151,123 @@ INSERT INTO rules (rule_string) VALUES ("(age > 30 AND department = 'Sales') OR 
 - **Security**: Add input validation and sanitize rule inputs to prevent injection attacks.
 - **Performance**: Efficient parsing of rules and AST combination strategies to reduce redundant evaluations.
 
-## Future Improvements
-- Support for user-defined functions within rule strings.
-- Caching for frequently used rules.
-- A UI for rule management (bonus task).
+  
+
+ ## SAMPLE INPUT-OUPUT
+
+### Sample Rule 1:
+```bash
+(age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing') AND (salary > 50000)
+```
+
+#### Test Case 1:
+**Input**:  
+```json
+{
+    "data": {
+        "age": 35,
+        "department": "Sales",
+        "salary": 60000,
+        "experience": 3
+    },
+    "rule_string": "(age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing') AND (salary > 50000)"
+}
+```
+**Expected Output**:
+```json
+{
+    "result": true
+}
+```
+
+**Explanation**:  
+- The user's age is 35 (which is greater than 30) and their department is 'Sales'. This satisfies the first part of the rule.
+- Thus, the result is `true`.
+
+---
+
+#### Test Case 2:
+**Input**:
+```json
+{
+    "data": {
+        "age": 23,
+        "department": "Marketing",
+        "salary": 60000,
+        "experience": 1
+    },
+    "rule_string": "(age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing') AND (salary > 50000)"
+}
+```
+**Expected Output**:
+```json
+{
+    "result": true
+}
+```
+
+**Explanation**:  
+- The user's age is 23 (less than 25) and their department is 'Marketing', and their salary is 60000 (which is greater than 50000).
+- This satisfies the second part of the rule, so the result is `true`.
+
+---
+
+#### Test Case 3:
+**Input**:
+```json
+{
+    "data": {
+        "age": 28,
+        "department": "Engineering",
+        "salary": 55000,
+        "experience": 5
+    },
+    "rule_string": "(age > 30 AND department = 'Sales') OR (age < 25 AND department = 'Marketing') AND (salary > 50000)"
+}
+```
+**Expected Output**:
+```json
+{
+    "result": false
+}
+```
+
+**Explanation**:  
+- The user does not meet any of the conditions in the rule. Their age is not greater than 30, department is not 'Sales', they are not younger than 25, and their department is not 'Marketing'.
+- Thus, the result is `false`.
+
+---
+
+### Sample Rule 2:
+```bash
+(age > 30 AND department = 'Marketing') AND (salary > 20000 OR experience > 5)
+```
+
+#### Test Case 4:
+**Input**:
+```json
+{
+    "data": {
+        "age": 40,
+        "department": "Marketing",
+        "salary": 25000,
+        "experience": 3
+    },
+    "rule_string": "(age > 30 AND department = 'Marketing') AND (salary > 20000 OR experience > 5)"
+}
+```
+**Expected Output**:
+```json
+{
+    "result": true
+}
+```
+
+**Explanation**:  
+- The user's age is 40 (greater than 30), their department is 'Marketing', and their salary is 25000 (greater than 20000).
+- This satisfies the rule, so the result is `true`.
+
+   
 
 ## Repository
 Link to GitHub: https://github.com/RogerZoe/Rule-Engine-with-AST/tree/master
