@@ -157,4 +157,4 @@ INSERT INTO rules (rule_string) VALUES ("(age > 30 AND department = 'Sales') OR 
 - A UI for rule management (bonus task).
 
 ## Repository
-Link to GitHub: []
+Link to GitHub: https://github.com/RogerZoe/Rule-Engine-with-AST/tree/master
